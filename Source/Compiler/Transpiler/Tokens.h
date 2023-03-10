@@ -10,116 +10,149 @@
 #include <string_view>
 #include <array>
 
-enum class TOKENS {
-    FN,
-    VAR,
+namespace Tokens {
+    enum class TOKEN {
+        NULLT,
+        FN,
+        VAR,
 
-    VOID,
-    INT,
-    IF,
-    ELSE,
-    WHILE,
-    FOR,
+        VOID,
+        INT,
+        FLOAT,
+        IF,
+        ELSE,
+        WHILE,
+        FOR,
 
-    SET,
+        SET,
 
-    ADD,
-    SUB,
-    MUL,
-    DIV,
+        ADD,
+        SUB,
+        MUL,
+        DIV,
 
-    ADD_SET,
-    SUB_SET,
-    MUL_SET,
-    DIV_SET,
-    INC,
-    DEC,
+        ADD_SET,
+        SUB_SET,
+        MUL_SET,
+        DIV_SET,
+        INC,
+        DEC,
 
-    AND,
-    OR,
-    EQ,
-    NE,
-    NOT,
-    ME,
-    LE,
-    MT,
-    LT,
+        AND,
+        OR,
+        EQ,
+        NE,
+        NOT,
+        ME,
+        LE,
+        MT,
+        LT,
 
-    LCB,
-    RCB,
-    LBB,
-    RBB,
-    LFB,
-    RFB,
+        LCB,
+        RCB,
+        LBB,
+        RBB,
+        LFB,
+        RFB,
 
-    STR_B,
+        STR_B,
 
-    REF,
-    END_C,
-    COMMENT,
-    COMMA,
+        REF,
+        BOR,
+        END_C,
+        COMMENT,
+        COMMA,
 
-    UNK_WORD,
-    NUMBER,
-};
+        UNK_WORD,
+        NUMBER,
+    };
 
-const int num_tokens = (int)TOKENS::NUMBER+1;
-const int num_words = (int)TOKENS::UNK_WORD+1;
+    const int num_tokens = (int)TOKEN::NUMBER;
+    const int num_words = (int)TOKEN::UNK_WORD;
 
-#define d(a, b) {#a, TOKENS::b},
+    #define d(a, b) {#a, TOKEN::b},
 
-const std::unordered_map<std::string, TOKENS> TOKENS_MAP{
-    d(fn, FN)
-    d(var, VAR)
+    inline std::unordered_map<std::string_view, TOKEN> TOKENS_MAP {
+        d(fn, FN)
+        d(var, VAR)
 
-    d(void, VOID)
-    d(int, INT)
-    d(if, IF)
-    d(else, ELSE)
-    d(while, WHILE)
-    d(for, FOR)
+        d(void, VOID)
+        d(int, INT)
+        d(float, FLOAT)
+        d(if, IF)
+        d(else, ELSE)
+        d(while, WHILE)
+        d(for, FOR)
 
-    d(=, SET)
+        d(=, SET)
 
-    d(+, ADD)
-    d(-, SUB)
-    d(*, MUL)
-    d(/, DIV)
+        d(+, ADD)
+        d(-, SUB)
+        d(*, MUL)
+        d(/, DIV)
 
-    d(+=, ADD_SET)
-    d(-=, SUB_SET)
-    d(*=, MUL_SET)
-    d(/=, DIV_SET)
-    d(++, INC)
-    d(--, DEC)
+        d(+=, ADD_SET)
+        d(-=, SUB_SET)
+        d(*=, MUL_SET)
+        d(/=, DIV_SET)
+        d(++, INC)
+        d(--, DEC)
 
-    d(&&, AND)
-    d(||, OR)
-    d(==, EQ)
-    d(!=, NE)
-    d(!, NOT)
-    d(>=, ME)
-    d(<=, LE)
-    d(>, MT)
-    d(<, LT)
+        d(&&, AND)
+        d(||, OR)
+        d(==, EQ)
+        d(!=, NE)
+        d(!, NOT)
+        d(>=, ME)
+        d(<=, LE)
+        d(>, MT)
+        d(<, LT)
 
-    {"(", TOKENS::LCB},
-    {")", TOKENS::RCB},
-    d([, LBB)
-    d(], RBB)
-    d({, LFB)
-    d(}, RFB)
+        {"(", TOKEN::LCB},
+        {")", TOKEN::RCB},
+        d([, LBB)
+        d(], RBB)
+        d({, LFB)
+        d(}, RFB)
 
-    {"\"", TOKENS::STR_B},
+        {"\"", TOKEN::STR_B},
 
-    d(&, REF)
-    d(;, END_C)
-    d(#, COMMENT)
-    {",", TOKENS::COMMA},
-};
+        d(&, REF)
+        d(|, BOR)
+        d(;, END_C)
+        d(#, COMMENT)
+        {",", TOKEN::COMMA},
+    };
 
-const std::array<std::string_view , 10> NUMERIC_CHARS {
+    const std::array<std::string , 10> NUMERIC_CHARS {
         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
-};
+    };
+
+    const std::array<std::string, 6> WHITESPACE {
+        " ", "\f", "\n", "\r", "\t", "\v"
+    };
+
+    const std::array<TOKEN, 19> LOGIC_TOKENS {
+            TOKEN::SET,
+            TOKEN::ADD,
+            TOKEN::SUB,
+            TOKEN::MUL,
+            TOKEN::DIV,
+            TOKEN::REF,
+            TOKEN::NOT,
+            TOKEN::BOR,
+            TOKEN::MT,
+            TOKEN::LT,
+            TOKEN::LCB,
+            TOKEN::RCB,
+            TOKEN::LBB,
+            TOKEN::RBB,
+            TOKEN::LFB,
+            TOKEN::RFB,
+            TOKEN::END_C,
+            TOKEN::COMMENT,
+            TOKEN::COMMA,
+    };
+}
 
 #endif //PRETTYNORMALPROGRAMMINGLANGUAGE_TOKENS_H

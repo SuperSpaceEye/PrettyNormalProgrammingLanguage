@@ -15,7 +15,7 @@ add_definitions(${LLVM_DEFINITIONS})
 include_directories("Source/Misc")
 include_directories("Source/Compiler")
 
-add_executable(${PROJECT_NAME} main.cpp Source/Compiler/Transpiler/Tokens.h Source/Misc/ConstMap.h Source/Compiler/Transpiler/Transpiler.cpp Source/Compiler/Transpiler/Transpiler.h)
+add_executable(${PROJECT_NAME} main.cpp Source/Compiler/Transpiler/Tokens.h Source/Misc/ConstMap.h Source/Compiler/Transpiler/Transpiler.cpp Source/Compiler/Transpiler/Transpiler.h Source/Misc/HelperFns.h Source/Compiler/Transpiler/TranspilerHelperFns.h)
 
 llvm_map_components_to_libnames(llvm_libs support core irreader)
 

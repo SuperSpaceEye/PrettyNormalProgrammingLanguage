@@ -8,9 +8,11 @@
 
 int main() {
 //
-//    for (auto & [k, v]: TOKENS) {
+//    for (auto & [k, v]: TOKEN) {
 //        std::cout << k << "\n";
 //    }
+//    auto b = TOKENS_MAP["hellpo"];
+//    auto a = 10;
 
     return 0;
 }
