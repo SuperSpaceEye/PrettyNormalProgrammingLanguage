@@ -31,7 +31,7 @@ namespace TranspilerNS {
             names.emplace_back(word);
             return names.size()-1;
         }
-        std::string get_word(Tokens::TOKEN token) {return names[(int)token];}
+        [[nodiscard]] std::string get_word(Tokens::TOKEN token) const {return names[(int)token];}
 
         WordRegister()=default;
     };

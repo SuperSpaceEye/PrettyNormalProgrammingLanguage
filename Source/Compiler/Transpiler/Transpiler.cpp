@@ -42,6 +42,7 @@ TranspilerResult Transpiler::transpile_data(const std::string &str_data) {
                 add_token();
             }
             started_token = false;
+            continue;
         }
 
         auto tk = TOKENS_MAP[chr];
@@ -110,9 +111,6 @@ TranspilerResult Transpiler::transpile_data(const std::string &str_data) {
                         word = "";
                         i++;
                         continue;
-                    } else {
-                        //TODO
-                        throw std::runtime_error("Malformed logic token");
                     }
                 }
             }
@@ -121,6 +119,9 @@ TranspilerResult Transpiler::transpile_data(const std::string &str_data) {
             continue;
         }
     }
+
+    to_return.tokens = std::move(tokenized);
+    to_return.wreg   = std::move(wreg);
 
     return to_return;
 }
@@ -153,4 +154,52 @@ void Transpiler::add_token() {
     tokenized.emplace_back(TOKEN::UNK_WORD, row, chrp);
     tokenized.emplace_back((TOKEN)wreg.register_word(word), row, chrp);
     word = "";
+}
+
+#include <iostream>
+
+void Transpiler::display_tokens(const TranspilerResult &result) {
+    for (int i = 0; i < result.tokens.size(); i++) {
+        auto token = result.tokens[i].token;
+
+        if (token == TOKEN::NUMBER) {
+            switch (result.tokens[i+1].token) {
+                case TOKEN::INT:
+                    std::cout << *(int32_t*)&result.tokens[i + 2].token;
+                    break;
+//                case TOKEN::UINT:
+//                    std::cout << (uint32_t) result.tokens[i + 2].first;
+//                    break;
+                case TOKEN::FLOAT:
+                    std::cout << *(float*)&result.tokens[i + 2].token;
+                    break;
+                default:
+                    throw std::logic_error("Unknown type token");
+            }
+            i += 2;
+            continue;
+        }
+
+        if (token == TOKEN::UNK_WORD) {
+            std::cout << result.wreg.get_word(result.tokens[i+1].token) << " ";
+            i++;
+            continue;
+        }
+
+//        if (token == Token::STR_BRACKET) {
+//            std::cout << "\"";
+//            while (result.tokens[++i].first != Token::STR_BRACKET) {
+//                std::cout << (char)((int)result.tokens[i].first-num_tokens);
+//            }
+//            std::cout << "\"";
+//            i++;
+//            continue;
+//        }
+        std::cout << INV_TOKENS_MAP[token];
+    }
+    std::cout << "\nWords: ";
+    for (auto & word: result.wreg.names) {
+        std::cout << "\"" << word << "\" ";
+    }
+    std::cout << "\n";
 }

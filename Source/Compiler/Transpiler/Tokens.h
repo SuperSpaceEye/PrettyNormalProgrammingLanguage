@@ -124,6 +124,15 @@ namespace Tokens {
         {",", TOKEN::COMMA},
     };
 
+    inline std::unordered_map<TOKEN, std::string_view> INV_TOKENS_MAP = {
+            []() {
+        std::unordered_map<TOKEN, std::string_view> ret;
+
+        for (auto & [k, v]: TOKENS_MAP) {ret[v] = k;}
+
+        return ret;
+    }()};
+
     const std::array<std::string , 10> NUMERIC_CHARS {
         "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
     };

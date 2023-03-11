@@ -1,0 +1,86 @@
+fn int fib_test(int n) {
+    if (n <= 1) {
+        return n;
+    }
+    return fib_test(n - 1) + fib_test(n - 2);
+}
+
+fn int while_loop_test(int n) {
+    var int counter;
+
+    while (n > 0) {
+        var int nn;
+        nn = n;
+        n -= 1;
+
+        while(nn > 0) {
+            print_num(n);
+            print_num(nn);
+            print_num(counter);
+            print_num(-1);
+
+            counter += 1;
+            nn -= 1;
+        }
+    }
+
+    return counter;
+}
+
+fn void if_statements_test(uint a) {
+    var int b;
+    var int c;
+    var int d;
+    b = 1;
+    c = 0;
+    d = 1;
+
+    if (a) {
+        if (b) {
+            if (c) {
+                if (d) {
+                    print_num(1);
+                } else {print_num(2);}
+            } else {print_num(3);}
+        } else {print_num(4);}
+    }
+
+    return;
+}
+
+fn int test1(int n) {
+    var int a;
+    a = 10;
+    n = n + a;
+
+    return n;
+}
+
+fn int test2(int n) {
+    var int a;
+    a = n * 100;
+    return a;
+}
+
+fn void num_const_if_expression_arg_test() {
+    #if (1) {
+    #   print_num(8888);
+    #} else {
+    #   print_num(9999);
+    #}
+
+    return();
+}
+
+fn void main() {
+    #210
+    print_num(while_loop_test(20));
+    #55
+    print_num(fib_test(10));
+    #280010
+    print_num(test1(test2(test2(test1(test1(8))))));
+    #3
+    if_statements_test(1);
+
+    return;
+}
